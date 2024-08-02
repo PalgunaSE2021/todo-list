@@ -12,56 +12,68 @@ import { TodoItemComponent } from '../todo-item/todo-item.component';
   imports: [CommonModule, FormsModule, TodoItemComponent],
 })
 export class TodoComponent implements OnInit {
-  todos: Todo[] = [];
   newTodoTitle: string = '';
+  todos: Todo[] = [];
+  errorMessage: string = '';
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadTodos();
   }
 
-  get activeTodos() {
-    return this.todos.filter((todo) => !todo.completed);
-  }
-
-  get completedTodos() {
-    return this.todos.filter((todo) => todo.completed);
-  }
-
-  addTodo() {
+  addTodo(): void {
     if (this.newTodoTitle.trim()) {
+      const duplicateTodo = this.todos.find(
+        (todo) =>
+          todo.title.toLowerCase() === this.newTodoTitle.trim().toLowerCase()
+      );
+      if (duplicateTodo) {
+        this.errorMessage = '*This task already exists.';
+        return;
+      }
+
       const newTodo: Todo = {
         id: Date.now(),
         title: this.newTodoTitle.trim(),
         completed: false,
       };
+
       this.todos.push(newTodo);
       this.newTodoTitle = '';
+      this.errorMessage = '';
       this.saveTodos();
     }
   }
 
-  toggleTodoCompletion(todo: Todo) {
+  toggleTodoCompletion(todo: Todo): void {
     todo.completed = !todo.completed;
     this.saveTodos();
   }
 
-  deleteTodo(todo: Todo) {
+  deleteTodo(todo: Todo): void {
     this.todos = this.todos.filter((t) => t.id !== todo.id);
     this.saveTodos();
   }
 
-  saveTodos() {
+  saveTodos(): void {
     if (typeof window !== 'undefined' && window.localStorage) {
       localStorage.setItem('todos', JSON.stringify(this.todos));
     }
   }
 
-  loadTodos() {
+  loadTodos(): void {
     if (typeof window !== 'undefined' && window.localStorage) {
-      const savedTodos = localStorage.getItem('todos');
-      if (savedTodos) {
-        this.todos = JSON.parse(savedTodos);
+      const storedTodos = localStorage.getItem('todos');
+      if (storedTodos) {
+        this.todos = JSON.parse(storedTodos);
       }
     }
+  }
+
+  get activeTodos(): Todo[] {
+    return this.todos.filter((todo) => !todo.completed);
+  }
+
+  get completedTodos(): Todo[] {
+    return this.todos.filter((todo) => todo.completed);
   }
 }

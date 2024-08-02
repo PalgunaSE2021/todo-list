@@ -5,6 +5,9 @@
     placeholder="Add a new todo"
     (keydown.enter)="addTodo()"
   />
+  <div class="error-container">
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  </div>
   <button (click)="addTodo()">Add</button>
 
   <div class="todo-lists">
