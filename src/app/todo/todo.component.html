@@ -1,19 +1,26 @@
 <div class="todo-container">
   <h1>Todo List</h1>
-  <input
-    [(ngModel)]="newTodoTitle"
-    placeholder="Add a new todo"
-    (keydown.enter)="addTodo()"
-  />
+  <div class="input-container">
+    <input
+      #newTaskInput
+      [(ngModel)]="newTodoTitle"
+      placeholder="Add a new todo"
+      (keydown.enter)="addTodo()"
+    />
+    <button (click)="addTodo()">Add</button>
+  </div>
   <div class="error-container">
     <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
   </div>
-  <button (click)="addTodo()">Add</button>
 
   <div class="todo-lists">
     <div class="todo-list">
       <h2>Active Tasks</h2>
       <ul>
+        <div *ngIf="activeTodos.length === 0">
+          No active tasks present <br />
+          <a href="#" (click)="focusAddTask()">Click here to add a new task</a>
+        </div>
         <li *ngFor="let todo of activeTodos">
           <app-todo-item
             [todo]="todo"
@@ -27,6 +34,9 @@
     <div class="todo-list">
       <h2>Completed Tasks</h2>
       <ul>
+        <div *ngIf="completedTodos.length === 0">
+          No completed tasks present
+        </div>
         <li *ngFor="let todo of completedTodos">
           <app-todo-item
             [todo]="todo"
