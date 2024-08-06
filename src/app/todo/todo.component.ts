@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Todo } from '../todo.model';
@@ -11,13 +17,15 @@ import { TodoItemComponent } from '../todo-item/todo-item.component';
   standalone: true,
   imports: [CommonModule, FormsModule, TodoItemComponent],
 })
-export class TodoComponent implements OnInit {
+export class TodoComponent implements OnInit, AfterViewInit {
+  @ViewChild('newTaskInput') newTodoInput!: ElementRef<HTMLInputElement>;
+
   newTodoTitle: string = '';
   todos: Todo[] = [];
   errorMessage: string = '';
 
-  ngOnInit(): void {
-    this.loadTodos();
+  focusAddTask(): void {
+    this.newTodoInput.nativeElement.focus();
   }
 
   addTodo(): void {
@@ -75,5 +83,13 @@ export class TodoComponent implements OnInit {
 
   get completedTodos(): Todo[] {
     return this.todos.filter((todo) => todo.completed);
+  }
+
+  ngAfterViewInit(): void {
+    this.focusAddTask();
+  }
+
+  ngOnInit(): void {
+    this.loadTodos();
   }
 }

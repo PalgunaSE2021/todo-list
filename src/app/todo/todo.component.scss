@@ -4,6 +4,18 @@
   text-align: center;
 }
 
+.input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+input {
+  padding: 8px;
+  width: calc(100% - 24px);
+}
+
 .todo-lists {
   display: flex;
   justify-content: space-between;
@@ -19,12 +31,6 @@
 
 .todo-list h2 {
   margin-top: 0;
-}
-
-input {
-  padding: 8px;
-  width: calc(100% - 16px);
-  margin-bottom: 10px;
 }
 
 button {
