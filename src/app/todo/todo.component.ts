@@ -29,27 +29,30 @@ export class TodoComponent implements OnInit, AfterViewInit {
   }
 
   addTodo(): void {
-    if (this.newTodoTitle.trim()) {
-      const duplicateTodo = this.todos.find(
-        (todo) =>
-          todo.title.toLowerCase() === this.newTodoTitle.trim().toLowerCase()
-      );
-      if (duplicateTodo) {
-        this.errorMessage = '*This task already exists.';
-        return;
-      }
-
-      const newTodo: Todo = {
-        id: Date.now(),
-        title: this.newTodoTitle.trim(),
-        completed: false,
-      };
-
-      this.todos.push(newTodo);
-      this.newTodoTitle = '';
-      this.errorMessage = '';
-      this.saveTodos();
+    if (!this.newTodoTitle.trim()) {
+      this.errorMessage = 'Please enter a task.';
+      return;
     }
+
+    const duplicateTodo = this.todos.find(
+      (todo) =>
+        todo.title.toLowerCase() === this.newTodoTitle.trim().toLowerCase()
+    );
+    if (duplicateTodo) {
+      this.errorMessage = '*This task already exists.';
+      return;
+    }
+
+    const newTodo: Todo = {
+      id: Date.now(),
+      title: this.newTodoTitle.trim(),
+      completed: false,
+    };
+
+    this.todos.push(newTodo);
+    this.newTodoTitle = '';
+    this.errorMessage = '';
+    this.saveTodos();
   }
 
   toggleTodoCompletion(todo: Todo): void {
