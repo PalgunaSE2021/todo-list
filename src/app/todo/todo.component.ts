@@ -39,7 +39,7 @@ export class TodoComponent implements OnInit, AfterViewInit {
         todo.title.toLowerCase() === this.newTodoTitle.trim().toLowerCase()
     );
     if (duplicateTodo) {
-      this.errorMessage = '*This task already exists.';
+      this.errorMessage = 'This task already exists.';
       return;
     }
 

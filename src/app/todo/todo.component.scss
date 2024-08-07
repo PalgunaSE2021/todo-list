@@ -7,7 +7,6 @@
 
 .input-container {
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: center;
   margin-bottom: 10px;
@@ -16,25 +15,33 @@
 input {
   padding: 8px;
   width: calc(100% - 24px);
+  border: 2px solid #b4dff4;
+  border-radius: 4px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus {
+  border-color: #77c0f1;
+  box-shadow: 0 0 5px rgba(107, 188, 242, 0.5);
+  outline: none;
 }
 
 .add-button {
   padding: 8px;
-  width: 20%;
   margin-bottom: 24px;
   margin-top: 24px;
   margin-left: 24px;
-  background: rgb(99, 202, 237);
+  background: rgb(71, 195, 236);
   color: white;
-  border: none;
-  border-radius: 4px;
+  border-color: rgb(99, 206, 235);
+  border-radius: 8px;
   cursor: pointer;
   font-size: 1rem;
   transition: background-color 0.3s ease;
 }
 
-add-button:hover {
-  background-color: rgb(8, 171, 225);
+.add-button:hover {
+  background-color: rgb(5, 137, 181);
 }
 
 .todo-lists {
