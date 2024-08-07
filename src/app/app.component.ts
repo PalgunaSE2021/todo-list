@@ -7,6 +7,6 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, FormsModule, TodoComponent],
-  template: '<app-todo></app-todo>',
+  templateUrl: './app.component.html',
 })
 export class AppComponent {}

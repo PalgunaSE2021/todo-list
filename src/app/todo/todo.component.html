@@ -7,7 +7,7 @@
       placeholder="Add a new todo"
       (keydown.enter)="addTodo()"
     />
-    <button (click)="addTodo()">Add</button>
+    <button class="add-button" (click)="addTodo()">Add</button>
   </div>
   <div class="error-container">
     <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
@@ -18,7 +18,7 @@
       <h2>Active Tasks</h2>
       <ul>
         <div *ngIf="activeTodos.length === 0">
-          No active tasks present <br />
+          No active tasks present <br /><br />
           <a href="#" (click)="focusAddTask()">Click here to add a new task</a>
         </div>
         <li *ngFor="let todo of activeTodos">
