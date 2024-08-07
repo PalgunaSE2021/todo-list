@@ -2,12 +2,12 @@
   <h1>Todo List</h1>
   <div class="input-container">
     <input
-      #newTaskInput
+      #newTodoInput
       [(ngModel)]="newTodoTitle"
       placeholder="Add a new todo"
       (keydown.enter)="addTodo()"
     />
-    <button class="add-button" (click)="addTodo()">Add</button>
+    <button (click)="addTodo()">Add</button>
   </div>
   <div class="error-container">
     <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
@@ -17,16 +17,20 @@
     <div class="todo-list">
       <h2>Active Tasks</h2>
       <ul>
-        <div *ngIf="activeTodos.length === 0">
-          No active tasks present <br /><br />
-          <a href="#" (click)="focusAddTask()">Click here to add a new task</a>
-        </div>
+        <li *ngIf="activeTodos.length === 0">
+          No active tasks present
+          <br />
+          <a href="#" (click)="focusAddTask($event)"
+            >Click here to add a new task</a
+          >
+        </li>
         <li *ngFor="let todo of activeTodos">
-          <app-todo-item
+          <app-task
             [todo]="todo"
             (toggle)="toggleTodoCompletion(todo)"
             (delete)="deleteTodo(todo)"
-          ></app-todo-item>
+            (addSubtask)="addSubtask(todo, $event)"
+          ></app-task>
         </li>
       </ul>
     </div>
@@ -34,15 +38,14 @@
     <div class="todo-list">
       <h2>Completed Tasks</h2>
       <ul>
-        <div *ngIf="completedTodos.length === 0">
-          No completed tasks present
-        </div>
+        <li *ngIf="completedTodos.length === 0">No completed tasks present</li>
         <li *ngFor="let todo of completedTodos">
-          <app-todo-item
+          <app-task
             [todo]="todo"
             (toggle)="toggleTodoCompletion(todo)"
             (delete)="deleteTodo(todo)"
-          ></app-todo-item>
+            (addSubtask)="addSubtask(todo, $event)"
+          ></app-task>
         </li>
       </ul>
     </div>

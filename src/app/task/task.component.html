@@ -1,0 +1,23 @@
+<div class="task-item">
+  <input type="checkbox" [checked]="todo.completed" (change)="onToggle()" />
+  <span>{{ todo.title }}</span>
+  <button (click)="onDelete()">Delete</button>
+</div>
+<div class="subtasks" *ngIf="!isSubtask">
+  <input
+    [(ngModel)]="newSubtaskTitle"
+    placeholder="Add a subtask"
+    (keydown.enter)="onAddSubtask()"
+  />
+  <button (click)="onAddSubtask()">Add</button>
+  <ul>
+    <li *ngFor="let subtask of todo.subtasks">
+      <app-task
+        [todo]="subtask"
+        [isSubtask]="true"
+        (toggle)="onToggleSubtask(subtask)"
+        (delete)="onDeleteSubtask(subtask)"
+      ></app-task>
+    </li>
+  </ul>
+</div>

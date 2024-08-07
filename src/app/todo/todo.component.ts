@@ -1,58 +1,51 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  AfterViewInit,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Todo } from '../todo.model';
-import { TodoItemComponent } from '../todo-item/todo-item.component';
+import { TaskComponent } from '../task/task.component';
 
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TodoItemComponent],
+  imports: [CommonModule, FormsModule, TaskComponent],
 })
-export class TodoComponent implements OnInit, AfterViewInit {
-  @ViewChild('newTaskInput') newTodoInput!: ElementRef<HTMLInputElement>;
+export class TodoComponent implements OnInit {
+  @ViewChild('newTodoInput') newTodoInput!: ElementRef;
 
   newTodoTitle: string = '';
   todos: Todo[] = [];
   errorMessage: string = '';
 
-  focusAddTask(): void {
-    this.newTodoInput.nativeElement.focus();
+  ngOnInit(): void {
+    this.loadTodos();
   }
 
   addTodo(): void {
-    if (!this.newTodoTitle.trim()) {
-      this.errorMessage = 'Please enter a task.';
-      return;
+    if (this.newTodoTitle.trim()) {
+      const duplicateTodo = this.todos.find(
+        (todo) =>
+          todo.title.toLowerCase() === this.newTodoTitle.trim().toLowerCase()
+      );
+      if (duplicateTodo) {
+        this.errorMessage = '*This task already exists.';
+        return;
+      }
+
+      const newTodo: Todo = {
+        id: Date.now(),
+        title: this.newTodoTitle.trim(),
+        completed: false,
+      };
+
+      this.todos.push(newTodo);
+      this.newTodoTitle = '';
+      this.errorMessage = '';
+      this.saveTodos();
+    } else {
+      this.errorMessage = '*Please enter a task.';
     }
-
-    const duplicateTodo = this.todos.find(
-      (todo) =>
-        todo.title.toLowerCase() === this.newTodoTitle.trim().toLowerCase()
-    );
-    if (duplicateTodo) {
-      this.errorMessage = 'This task already exists.';
-      return;
-    }
-
-    const newTodo: Todo = {
-      id: Date.now(),
-      title: this.newTodoTitle.trim(),
-      completed: false,
-    };
-
-    this.todos.push(newTodo);
-    this.newTodoTitle = '';
-    this.errorMessage = '';
-    this.saveTodos();
   }
 
   toggleTodoCompletion(todo: Todo): void {
@@ -60,8 +53,36 @@ export class TodoComponent implements OnInit, AfterViewInit {
     this.saveTodos();
   }
 
+  toggleSubtaskCompletion(task: Todo, subtask: Todo): void {
+    subtask.completed = !subtask.completed;
+    this.saveTodos();
+  }
+
   deleteTodo(todo: Todo): void {
     this.todos = this.todos.filter((t) => t.id !== todo.id);
+    this.saveTodos();
+  }
+
+  deleteSubtask(task: Todo, subtask: Todo): void {
+    if (task.subtasks) {
+      task.subtasks = task.subtasks.filter((t) => t.id !== subtask.id);
+    }
+    this.saveTodos();
+  }
+
+  addSubtask(todo: Todo, title: string): void {
+    if (!todo.subtasks) {
+      todo.subtasks = [];
+    }
+
+    const newSubtask: Todo = {
+      id: Date.now(),
+      title,
+      completed: false,
+      isSubtask: true,
+    };
+
+    todo.subtasks.push(newSubtask);
     this.saveTodos();
   }
 
@@ -88,11 +109,8 @@ export class TodoComponent implements OnInit, AfterViewInit {
     return this.todos.filter((todo) => todo.completed);
   }
 
-  ngAfterViewInit(): void {
-    this.focusAddTask();
-  }
-
-  ngOnInit(): void {
-    this.loadTodos();
+  focusAddTask(event: Event): void {
+    event.preventDefault();
+    this.newTodoInput.nativeElement.focus();
   }
 }
