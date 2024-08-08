@@ -2,21 +2,21 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  background: #fafafa;
+  padding: 8px;
+  margin-bottom: 8px;
+  background: #e7eff1;
+  border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .task-item:hover {
-  background-color: #f0f0f0;
+  background-color: #abb4b7;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .task-item input[type="checkbox"] {
-  margin-right: 10px;
+  margin-right: 8px;
 }
 
 .task-item span {
@@ -37,12 +37,16 @@
 }
 
 .subtasks {
-  margin-left: 20px;
-  margin-top: 10px;
+  margin-left: 24px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
+
 button {
   margin-left: 8px;
-  padding: 1px;
+  padding-left: 4px;
+  padding-right: 4px;
+  margin-bottom: 10px;
   background: rgb(99, 202, 237);
   color: white;
   border: none;
@@ -54,4 +58,12 @@ button {
 
 button:hover {
   background-color: rgb(8, 171, 225);
+}
+
+.error {
+  color: red;
+  font-size: 0.9em;
+  margin-bottom: 8px;
+  margin-top: -8px;
+  margin-right: 80px;
 }

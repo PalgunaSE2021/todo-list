@@ -7,12 +7,11 @@
       placeholder="Add a new todo"
       (keydown.enter)="addTodo()"
     />
-    <button (click)="addTodo()">Add</button>
+    <button class="add-button" (click)="addTodo()">Add</button>
   </div>
   <div class="error-container">
     <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
   </div>
-
   <div class="todo-lists">
     <div class="todo-list">
       <h2>Active Tasks</h2>
@@ -30,6 +29,8 @@
             (toggle)="toggleTodoCompletion(todo)"
             (delete)="deleteTodo(todo)"
             (addSubtask)="addSubtask(todo, $event)"
+            (toggleSubtask)="toggleSubtaskCompletion(todo, $event)"
+            (deleteSubtask)="deleteSubtask(todo, $event)"
           ></app-task>
         </li>
       </ul>
@@ -45,6 +46,8 @@
             (toggle)="toggleTodoCompletion(todo)"
             (delete)="deleteTodo(todo)"
             (addSubtask)="addSubtask(todo, $event)"
+            (toggleSubtask)="toggleSubtaskCompletion(todo, $event)"
+            (deleteSubtask)="deleteSubtask(todo, $event)"
           ></app-task>
         </li>
       </ul>
