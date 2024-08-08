@@ -20,6 +20,7 @@ export class TaskComponent {
   @Output() addSubtask = new EventEmitter<string>();
 
   newSubtaskTitle: string = '';
+  subtaskErrorMessage: string = '';
 
   onToggle(): void {
     this.toggle.emit();
@@ -38,9 +39,23 @@ export class TaskComponent {
   }
 
   onAddSubtask(): void {
-    if (this.newSubtaskTitle.trim()) {
-      this.addSubtask.emit(this.newSubtaskTitle.trim());
-      this.newSubtaskTitle = '';
+    if (!this.newSubtaskTitle.trim()) {
+      this.subtaskErrorMessage = 'Please enter a subtask.';
+      return;
     }
+    const isDuplicate = this.todo.subtasks?.some(
+      (subtask) =>
+        subtask.title.toLowerCase() ===
+        this.newSubtaskTitle.trim().toLowerCase()
+    );
+
+    if (isDuplicate) {
+      this.subtaskErrorMessage = 'This subtask already exists';
+      return;
+    }
+
+    this.addSubtask.emit(this.newSubtaskTitle.trim());
+    this.newSubtaskTitle = '';
+    this.subtaskErrorMessage = '';
   }
 }

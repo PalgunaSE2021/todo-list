@@ -29,7 +29,7 @@ export class TodoComponent implements OnInit {
           todo.title.toLowerCase() === this.newTodoTitle.trim().toLowerCase()
       );
       if (duplicateTodo) {
-        this.errorMessage = '*This task already exists.';
+        this.errorMessage = 'This task already exists.';
         return;
       }
 
@@ -45,7 +45,7 @@ export class TodoComponent implements OnInit {
       this.errorMessage = '';
       this.saveTodos();
     } else {
-      this.errorMessage = '*Please enter a task.';
+      this.errorMessage = 'Please enter a task.';
     }
   }
 

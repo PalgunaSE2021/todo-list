@@ -10,6 +10,7 @@
     (keydown.enter)="onAddSubtask()"
   />
   <button (click)="onAddSubtask()">Add</button>
+  <div *ngIf="subtaskErrorMessage" class="error">{{ subtaskErrorMessage }}</div>
   <ul>
     <li *ngFor="let subtask of todo.subtasks">
       <app-task
