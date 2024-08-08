@@ -37,6 +37,7 @@ export class TodoComponent implements OnInit {
         id: Date.now(),
         title: this.newTodoTitle.trim(),
         completed: false,
+        subtasks: [],
       };
 
       this.todos.push(newTodo);
@@ -79,7 +80,7 @@ export class TodoComponent implements OnInit {
       id: Date.now(),
       title,
       completed: false,
-      isSubtask: true,
+      subtasks: [],
     };
 
     todo.subtasks.push(newSubtask);
