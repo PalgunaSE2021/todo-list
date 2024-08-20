@@ -5,11 +5,12 @@
 </div>
 <div class="subtasks" *ngIf="!isSubtask">
   <input
+    class="input-class"
     [(ngModel)]="newSubtaskTitle"
     placeholder="Add a subtask"
     (keydown.enter)="onAddSubtask()"
   />
-  <button (click)="onAddSubtask()">Add</button>
+  <button class="add-subtask-button" (click)="onAddSubtask()">Add</button>
   <div *ngIf="subtaskErrorMessage" class="error">{{ subtaskErrorMessage }}</div>
   <ul>
     <li *ngFor="let subtask of todo.subtasks">
